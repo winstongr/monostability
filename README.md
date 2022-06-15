@@ -4,3 +4,5 @@ Data repository for studying mono-/bistability of TCSs
 	
 	BindingSiteStrength --> Fig 4
 	
+	LGa_fig5 --> Fig 5 & S3 Fig, Phosphorylation module
+	
