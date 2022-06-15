@@ -8,3 +8,5 @@ Data repository for studying mono-/bistability of TCSs
 	
 	ThreeLGs_fig6.m --> Fig 6 A & C, Three modules combined
 	
+	auto_steadyfig6D.m --> Fig 6 D 
+	
