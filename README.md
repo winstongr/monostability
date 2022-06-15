@@ -6,3 +6,5 @@ Data repository for studying mono-/bistability of TCSs
 	
 	LGa_fig5.m --> Fig 5 & S3 Fig, Phosphorylation module
 	
+	ThreeLGs_fig6.m --> Fig 6 A & C, Three modules combined
+	
