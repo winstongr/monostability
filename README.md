@@ -12,3 +12,5 @@ Data repository for studying mono-/bistability of TCSs
 	
 	auto_steadyfig6D.m --> Fig 6 D 
 	
+	Fig7-cytometry-Decoy###.zip --> Fig 7
+	
