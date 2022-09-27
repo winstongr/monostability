@@ -4,25 +4,26 @@ set(groot,'DefaultAxesLinewidth',1) %axis line width
 set(groot,'DefaultAxesColor','none') %transparent background
 set(groot,'DefaultAxesTicklength',[0.018 0.025])
 set(groot,'DefaultFigurePosition',[360,198,560,420]) %figure size, left, bottom, width,height
-%factory default 560,420 for shorter graphs, above 500,420 for thinner graphs
+
 % to speed up, not using symbolic math
 %% initialize and value assignment
-Nt=120; %Rt & Cp values
+Nt=120;                 %Number of Rt values
 Rtv=logspace(-1,2,Nt);
-Np=42;
-Cpspan=logspace(-1,log10(190),Np);
+Np=42;                  %Number of Cp values
+Cpspan=logspace(-1,log10(190),Np);      %Cp range 0.1-190
 
-Nf=35; %f values
+Nf=35;                  %Number of f values
 fv=logspace(0,2,Nf);
 
 
-DNAamount=[0 0.25, 0.5,1,1.5, 2];
+DNAamount=[0 0.25, 0.5,1,1.5, 2];   % DNA amount D*
 Nd=length(DNAamount); 
 
-Kv=[1/3, 0.5, 2];
+Kv=[1/3, 0.5, 2];       % DNA binding affinity K*
 Nk=length(Kv);
-h=2;
+h=2;                    %DNA binding Hill coefficient
 
+%assign variables to store results
 maxLG=zeros(Np,Nf,Nd,Nk);
 maxRpPerc=zeros(Np,Nf,Nd,Nk);
 maxI=zeros(Np,Nf,Nd,Nk);
@@ -59,13 +60,13 @@ for ik=1:Nk
                     Rf_store(i,ip,id,ik)=Rf;
                 else
                 fsol=roots([1  2*D-Rp  K^2  -Rp*K^2]);
-                pf=fsol(imag(fsol)==0 & fsol>=0 & fsol<=Rp);
+                pf=fsol(imag(fsol)==0 & fsol>=0 & fsol<=Rp); % select real, positive Rf solutions
                 if length(pf)==1
-                    Rf=pf;
+                    Rf=pf;                                  
                     Rf_store(i,ip,id,ik)=Rf;
                 else
                     Rf=max(pf);
-                    Rf_store(i,ip,id,ik)=-1*length(pf);
+                    Rf_store(i,ip,id,ik)=-1*length(pf);     %report aberrant fsol (root) with multiple solutions  
                 end
                 LGb=((K^2+Rf^2)*(K^2+Rf^2+2*D*Rf))/(K^4+2*K^2*Rf^2+4*D*K^2*Rf+Rf^4);
                 end
