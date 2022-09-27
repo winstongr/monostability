@@ -1,13 +1,16 @@
+% For contour plots, the script uses the function: othercolor() 
+% citation for othercolor:
+% Joshua Atkins (2022). othercolor (https://www.mathworks.com/matlabcentral/fileexchange/30564-othercolor), MATLAB Central File Exchange.  
+
 clear
 set(groot,'DefaultAxesBox','on') %set default, show figure box/frame show
 set(groot,'DefaultAxesLinewidth',1) %axis line width
 set(groot,'DefaultAxesColor','none') %transparent background
 set(groot,'DefaultAxesTicklength',[0.018 0.025])
 set(groot,'DefaultFigurePosition',[360,198,560,420]) %figure size, left, bottom, width,height
-%factory default 560,420 for shorter graphs, above 500,420 for thinner graphs
+
 %% initialize for binding module
-% DNA amount use direct amount, not ratio of Rt, because there is no Rt
-% value if phos. module is not involved
+% DNA amount use actual amount, not ratio of Rt
 DNAv=[0 0.3 1 3];
 Kv=[1/3, 0.5, 1, 3];
 nd=length(DNAv);
@@ -16,8 +19,8 @@ n=61;
 Rfv=logspace(-1.7,1.3,n)';
 
 Rp_values=zeros(n,nd,nk);
-LGb_values=zeros(n,nd,nk);
-LGbLGf=zeros(n,nd,nk);
+LGb_values=zeros(n,nd,nk);  %LGb: LG of DNA binding module
+LGbLGf=zeros(n,nd,nk);      %LGf: LG of the autoregulation module
 
 %% calulate Rp, LGb values, LGb*LGf
 Rf=Rfv;
@@ -82,7 +85,7 @@ for i=2:2
     xlabel('Rp')
     legend('location','northwest');
 end
-%%  plot with vary
+%%  plot with vary D
 fKf=gobjects(nd,1);
 fKp=gobjects(nd,1);
 cKname=jet(nk);

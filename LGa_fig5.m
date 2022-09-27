@@ -1,3 +1,7 @@
+% For contour plots, the script uses the function: othercolor() 
+% citation for othercolor:
+% Joshua Atkins (2022). othercolor (https://www.mathworks.com/matlabcentral/fileexchange/30564-othercolor), MATLAB Central File Exchange.  
+
 clear
 set(groot,'DefaultAxesBox','on') %set default, show figure box/frame show
 set(groot,'DefaultAxesLinewidth',1) %axis line width
@@ -5,7 +9,7 @@ set(groot,'DefaultAxesColor','none') %transparent background
 set(groot,'DefaultAxesTicklength',[0.018 0.025])
 set(groot,'DefaultFigurePosition',[360,198,560,420]) %figure size, left, bottom, width,height
 %factory default 560,420 for shorter graphs, above 500,420 for thinner graphs
-%% initialize, LGa Phos quadratic & LGf autoregulation
+%% initialize, LGa Phos quadratic & LGf autoregulation using symbolic tools
 syms Cp Ct Rt
 assume(Rt,'positive');
 assume(Ct,'positive');
@@ -19,26 +23,27 @@ syms Kauto f h Rf
 LGf=(Kauto^h*Rf^h*h*(f - 1))/((Kauto^h + Rf^h*f)*(Kauto^h + Rf^h));
 sLGf=subs(LGf,[Kauto h],[1 2]);
 
-Nr=51;
-Rtv=logspace(-1,2,Nr);
+Nr=51;                  %Number of Rt values for numerical calculation
+Rtv=logspace(-1,2,Nr);  % Rt values to scan
 cpv=[0.2 1 5];
 ncp=length(cpv);
-nrf=61;
+nrf=61;                 % number of Rf values to scan
 Rfv=logspace(-1.7,1.3,nrf);
 
 %%  Kauto as unit, cal. Rp/LGa, Cp 0.2,1,5, Ct 1
 
-Rp2_values=zeros(ncp,Nr);
+Rp2_values=zeros(ncp,Nr); %Rp, phosphorylated RR, calculated from Cp, Ct & Rt
 LGa2_values=zeros(ncp,Nr);
 LGf_value=zeros(nrf,1);
 
+% phosphorylation module
 for i=1:ncp
     for j=1:Nr
         Rp2_values(i,j)=double(subs(Rp,[Cp,Ct,Rt],[cpv(i),1,Rtv(j)]));
         LGa2_values(i,j)=double(subs(LGa,[Cp,Ct,Rt],[cpv(i),1,Rtv(j)]));
     end
 end
-
+% autoregulation module
 for i=1:nrf
     LGf_value(i)=double(subs(sLGf,[f,Rf],[25,Rfv(i)]));
 end
