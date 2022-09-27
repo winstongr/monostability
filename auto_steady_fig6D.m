@@ -5,18 +5,18 @@ set(groot,'DefaultAxesColor','none') %transparent background
 set(groot,'DefaultAxesTicklength',[0.018 0.025])
 set(groot,'DefaultFigurePosition',[360,198,560,420])
 %% initialize conditions
-%Nd=41;
-%Den=linspace(0.01,4.01,Nd)'; % number of endo sites, use 0.01 to approximate 0
-Den=[0.01, 0.51, 1, 1.51, 1.91, 2.01, 2.11, 2.21, 2.5];
+
+
+Den=[0.01, 0.51, 1, 1.51, 1.91, 2.01, 2.11, 2.21, 2.5]; % number of cometing DNA sites, use 0.01 to approximate 0
 Nd=length(Den);
-Ken=0.5; % affinity of endo sites, could use distribution in the future, vary by K0*fen
+Ken=0.5; % affinity of competing DNA sites
 h=2;
 hl=2;  
 f=5;
 %Rb=[0.2 1];
 Rb=1.52;
-NCp=301;
-Cpv=logspace(0,log10(500),NCp)';
+NCp=301;        % number of Cp values to scan
+Cpv=logspace(0,log10(500),NCp)';  % Cp values
 Ct=3;
 
 
@@ -25,6 +25,7 @@ RRf_value=zeros(NCp,3,Nd);
 Nsol=zeros(NCp,Nd);
 
 %% calulate steady state 
+% calculate steady state solutions at different Cp
 for i=1:Nd        
     const=[Den(i) Ken Ct f Rb];
     sol=steady(Cpv,const);
